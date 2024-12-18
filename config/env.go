@@ -21,19 +21,19 @@ var Envs = initConfig()
 func initConfig() Config {
 	godotenv.Load()
 	return Config{
-		PublicHost: getEnv("PUBLIC_HOST", "http://localhost"),
-		Port:       getEnv("PORT", "8080"),
-		DBUser:     getEnv("DB_USER", "root"),
-		DBPassword: getEnv("DB_PASSWORD", "MyNew@Password123"),
-		DBAddress:  fmt.Sprintf("%s:%s", getEnv("DB_HOST", "127.0.0.1"), getEnv("DB_PORT", "3306")),
-		DBName:     getEnv("DB_NAME", "ecom"),
+		PublicHost: getEnv("PUBLIC_HOST"),
+		Port:       getEnv("PORT"),
+		DBUser:     getEnv("DB_USER"),
+		DBPassword: getEnv("DB_PASSWORD"),
+		DBAddress:  fmt.Sprintf("%s:%s", getEnv("DB_HOST"), getEnv("DB_PORT")),
+		DBName:     getEnv("DB_NAME"),
 	}
 }
 
-func getEnv(key, fallback string) string {
+func getEnv(key string) string {
 	value, ok := os.LookupEnv(key)
 	if ok {
 		return value
 	}
-	return fallback
+	return "not taken"
 }
