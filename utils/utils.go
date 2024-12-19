@@ -8,7 +8,6 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-
 var Validate = validator.New()
 
 func ParseJSON(r *http.Request, payload any) error {
@@ -31,6 +30,5 @@ func WriteError(w http.ResponseWriter, status int, err error) {
 }
 
 func WriteAPI(w http.ResponseWriter, status int, payload any) {
-	WriteJSON(w, status,payload)
+	WriteJSON(w, status, payload)
 }
-

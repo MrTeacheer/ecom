@@ -52,7 +52,6 @@ func scanRowIntoUser(rows *sql.Rows) (*types.User, error) {
 	return user, nil
 }
 
-
 func (s *Store) CreateUser(user types.User) error {
 	_, err := s.db.Exec("INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)", user.FirstName, user.LastName, user.Email, user.Password)
 	if err != nil {
@@ -61,7 +60,6 @@ func (s *Store) CreateUser(user types.User) error {
 
 	return nil
 }
-
 
 func (s *Store) GetUserByID(id int) (*types.User, error) {
 	rows, err := s.db.Query("SELECT * FROM users WHERE id = ?", id)
@@ -84,25 +82,22 @@ func (s *Store) GetUserByID(id int) (*types.User, error) {
 	return u, nil
 }
 
-
-
-
-func (s *Store) GetAllUsers() ([]types.User,error){
-	rows,err := s.db.Query("SELECT * FROM users")
-	if err != nil{
-		return nil,err
+func (s *Store) GetAllUsers() ([]types.User, error) {
+	rows, err := s.db.Query("SELECT * FROM users")
+	if err != nil {
+		return nil, err
 	}
 	var users []types.User
-	for rows.Next(){
+	for rows.Next() {
 		var u = new(types.User)
-		u,err = scanRowsIntoUser(rows)
-		if err != nil{
-			return nil,err
+		u, err = scanRowsIntoUser(rows)
+		if err != nil {
+			return nil, err
 		}
-		users = append(users,*u)
+		users = append(users, *u)
 
 	}
-	return users,nil
+	return users, nil
 
 }
 

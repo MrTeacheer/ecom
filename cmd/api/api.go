@@ -2,10 +2,10 @@ package api
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/MrTeacheer/ecom/service/products"
 	"github.com/MrTeacheer/ecom/service/user"
 	"github.com/gorilla/mux"
 )
@@ -22,9 +22,9 @@ func NewAPIServer(addr string, db *sql.DB) *APIServer {
 	}
 }
 
-func greeting(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "HELLO TEACHER!!!!!")
-}
+// func greeting(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintf(w, "HELLO TEACHER!!!!!")
+// }
 
 func (s *APIServer) Run() error {
 	router := mux.NewRouter()
@@ -33,7 +33,10 @@ func (s *APIServer) Run() error {
 	user_store := user.NewStore(s.db)
 	user_route := user.NewHandler(user_store)
 	user_route.RegisterRoutes(subrouter)
-	subrouter.HandleFunc("/greeting", greeting)
+
+	product_store := products.NewStore(s.db)
+	product_route := products.NewHandler(product_store)
+	product_route.RegisterRouter(subrouter)
 
 	log.Println("listening", s.addr)
 	return http.ListenAndServe(s.addr, router)
