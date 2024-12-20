@@ -1,11 +1,9 @@
 package types
 
-
-type ProductStore interface{
-	CreateProduct(ProductAdd)(error)
-	GetProducts()([]Product,error)
+type ProductStore interface {
+	CreateProduct(ProductAdd) error
+	GetProducts() ([]Product, error)
 }
-
 
 type ProductAdd struct {
 	Name        string  `json:"name" validate:"required"`

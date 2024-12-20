@@ -29,29 +29,29 @@ func (h *Handler) RegisterRoutes(router *mux.Router) {
 
 func (h *Handler) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	var payload types.LoginUserPayload
-	if err:= utils.ParseJSON(r,&payload); err != nil{
-		utils.WriteError(w,http.StatusBadRequest,err)
+	if err := utils.ParseJSON(r, &payload); err != nil {
+		utils.WriteError(w, http.StatusBadRequest, err)
 		return
 	}
 
-	u,err := h.store.GetUserByEmail(payload.Email)
-	if err != nil{
-		utils.WriteError(w,http.StatusBadRequest,err)
+	u, err := h.store.GetUserByEmail(payload.Email)
+	if err != nil {
+		utils.WriteError(w, http.StatusBadRequest, err)
 		return
 	}
 
-	if !auth.ComparePasswords(u.Password,[]byte(payload.Password)){
-		utils.WriteError(w,http.StatusBadRequest,fmt.Errorf("pssword is incorrect"))
+	if !auth.ComparePasswords(u.Password, []byte(payload.Password)) {
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf("pssword is incorrect"))
 		return
 	}
 	secret := config.Envs.JWTsecret
-	token, err := auth.CreateJWT([]byte(secret),u.ID)
-	if err!= nil{
-		utils.WriteError(w,http.StatusBadRequest,err)
+	token, err := auth.CreateJWT([]byte(secret), u.ID)
+	if err != nil {
+		utils.WriteError(w, http.StatusBadRequest, err)
 		return
 	}
 
-	utils.WriteAPI(w,http.StatusOK,map[string]string{"token":token})
+	utils.WriteAPI(w, http.StatusOK, map[string]string{"token": token})
 
 }
 

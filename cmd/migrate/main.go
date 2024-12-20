@@ -14,7 +14,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-func main(){
+func main() {
 	db, db_err := db.NewMySQLStorage(mysqlCFG.Config{
 		User:                 config.Envs.DBUser,
 		Passwd:               config.Envs.DBPassword,
@@ -28,17 +28,16 @@ func main(){
 	checkConnDB(db)
 
 	driver, err := mysql.WithInstance(db, &mysql.Config{})
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	m,err := migrate.NewWithDatabaseInstance(
+	m, err := migrate.NewWithDatabaseInstance(
 		"file://cmd/migrate/migrations",
 		"mysql",
 		driver,
-
 	)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -54,7 +53,6 @@ func main(){
 		}
 	}
 
-
 }
 
 func checkConnDB(db *sql.DB) {
@@ -62,4 +60,3 @@ func checkConnDB(db *sql.DB) {
 	errs.Check(err)
 	log.Println("Database connected succesfully")
 }
-

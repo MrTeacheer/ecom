@@ -9,14 +9,14 @@ import (
 )
 
 type Config struct {
-	PublicHost string
-	Port       string
-	DBUser     string
-	DBPassword string
-	DBAddress  string
-	DBName     string
+	PublicHost    string
+	Port          string
+	DBUser        string
+	DBPassword    string
+	DBAddress     string
+	DBName        string
 	JWTexparation int64
-	JWTsecret string
+	JWTsecret     string
 }
 
 var Envs = initConfig()
@@ -24,14 +24,14 @@ var Envs = initConfig()
 func initConfig() Config {
 	godotenv.Load()
 	return Config{
-		PublicHost: getEnv("PUBLIC_HOST"),
-		Port:       getEnv("PORT"),
-		DBUser:     getEnv("DB_USER"),
-		DBPassword: getEnv("DB_PASSWORD"),
-		DBAddress:  fmt.Sprintf("%s:%s", getEnv("DB_HOST"), getEnv("DB_PORT")),
-		DBName:     getEnv("DB_NAME"),
+		PublicHost:    getEnv("PUBLIC_HOST"),
+		Port:          getEnv("PORT"),
+		DBUser:        getEnv("DB_USER"),
+		DBPassword:    getEnv("DB_PASSWORD"),
+		DBAddress:     fmt.Sprintf("%s:%s", getEnv("DB_HOST"), getEnv("DB_PORT")),
+		DBName:        getEnv("DB_NAME"),
 		JWTexparation: getEnvAsInt("JWT_EXP"),
-		JWTsecret: getEnv("JWTsecret"),
+		JWTsecret:     getEnv("JWTsecret"),
 	}
 }
 

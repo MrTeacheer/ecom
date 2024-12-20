@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/MrTeacheer/ecom/service/orders"
 	"github.com/MrTeacheer/ecom/service/products"
 	"github.com/MrTeacheer/ecom/service/user"
 	"github.com/gorilla/mux"
@@ -37,6 +38,10 @@ func (s *APIServer) Run() error {
 	product_store := products.NewStore(s.db)
 	product_route := products.NewHandler(product_store)
 	product_route.RegisterRouter(subrouter)
+
+	order_store := orders.NewStore(s.db)
+	order_route := orders.NewHandler(order_store)
+	order_route.RegisterRouter(subrouter)
 
 	log.Println("listening", s.addr)
 	return http.ListenAndServe(s.addr, router)
